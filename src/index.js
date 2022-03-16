@@ -1,21 +1,48 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import { createStore } from '@reduxjs/toolkit';
+import { NoteReducer } from './components/NoteReducer';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const store = createStore(NoteReducer);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+store.dispatch({
+  type: '@note/created',
+  payload: {
+    content: 'testing redix in this app',
+    important: true,
+    id: 1,
+  },
+});
+
+store.dispatch({
+  type: '@note/created',
+  payload: {
+    content: 'Test 2 ',
+    important: false,
+    id: 2,
+  },
+});
+
+const App = () => {
+  const state = store.getState();
+  return (
+    <ul>
+      {state.map((note) => {
+        return (
+          <li key={note.id}>
+            {note.content}{' '}
+            <strong> {note.important ? 'important' : 'not important'}</strong>
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'));
+};
+
+renderApp();
+
+store.subscrubre(renderApp);

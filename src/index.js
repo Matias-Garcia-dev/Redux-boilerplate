@@ -37,6 +37,15 @@ const createNote = (content) => {
   };
 };
 
+const toggleImportant = (id) => {
+  store.dispatch({
+    type: '@note/toggle_important',
+    payload: {
+      id,
+    },
+  });
+};
+
 const App = () => {
   const state = useSelector((state) => state);
 
@@ -53,12 +62,16 @@ const App = () => {
     <div>
       <form onSubmit={addNote}>
         <input name='note' />
-        <button>add</button>
+        <button style={{ cursor: 'pointer' }}>add</button>
       </form>
       <ul>
         {state.map((note) => {
           return (
-            <li key={note.id}>
+            <li
+              key={note.id}
+              onClick={() => toggleImportant(note.id)}
+              style={{ cursor: 'pointer' }}
+            >
               {note.content}{' '}
               <strong> {note.important ? 'important' : 'not important'}</strong>
             </li>

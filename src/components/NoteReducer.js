@@ -1,4 +1,4 @@
-export const NoteReducer = (state = [], action) => {
+export const noteReducer = (state = [], action) => {
   switch (action.type) {
     case '@note/created':
       return [...state, action.payload];
@@ -17,4 +17,16 @@ export const NoteReducer = (state = [], action) => {
       break;
   }
   return state;
+};
+
+const generateID = () => Math.floor(Math.random() * 99999) + 1;
+export const createNote = (content) => {
+  return {
+    type: '@note/created',
+    payload: {
+      content,
+      important: false,
+      id: generateID(),
+    },
+  };
 };

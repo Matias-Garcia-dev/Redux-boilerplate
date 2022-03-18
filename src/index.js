@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from '@reduxjs/toolkit';
-import { NoteReducer } from './components/NoteReducer';
-import { Provider, useSelector } from 'react-redux';
+import { noteReducer } from './components/NoteReducer';
+import { Provider } from 'react-redux';
+import App from './App';
 
-const store = createStore(NoteReducer);
+const store = createStore(noteReducer);
 
 /* store.dispatch({
   type: '@note/created',
@@ -24,68 +25,10 @@ store.dispatch({
   },
 }); */
 
-const generateID = () => Math.floor(Math.random() * 99999) + 1;
-
-const createNote = (content) => {
-  return {
-    type: '@note/created',
-    payload: {
-      content,
-      important: false,
-      id: generateID(),
-    },
-  };
-};
-
-const toggleImportant = (id) => {
-  store.dispatch({
-    type: '@note/toggle_important',
-    payload: {
-      id,
-    },
-  });
-};
-
-const App = () => {
-  const state = useSelector((state) => state);
-
-  const addNote = (event) => {
-    event.preventDefault();
-    const { target } = event;
-    const content = target.note.value;
-    console.log(content);
-    target.note.value = '';
-    store.dispatch(createNote(content));
-    console.log(state);
-  };
-  return (
-    <div>
-      <form onSubmit={addNote}>
-        <input name='note' />
-        <button style={{ cursor: 'pointer' }}>add</button>
-      </form>
-      <ul>
-        {state.map((note) => {
-          return (
-            <li
-              key={note.id}
-              onClick={() => toggleImportant(note.id)}
-              style={{ cursor: 'pointer' }}
-            >
-              {note.content}{' '}
-              <strong> {note.important ? 'important' : 'not important'}</strong>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
-
 const renderApp = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <App store={store} />
     </Provider>,
     document.getElementById('root')
   );

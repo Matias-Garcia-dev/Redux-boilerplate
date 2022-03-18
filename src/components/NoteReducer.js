@@ -1,4 +1,17 @@
-export const noteReducer = (state = [], action) => {
+const intialState = [
+  {
+    content: 'welcome to my boilerplate',
+    important: true,
+    id: 1,
+  },
+  {
+    content: ' Matias Garcia',
+    important: false,
+    id: 2,
+  },
+];
+
+export const noteReducer = (state = intialState, action) => {
   switch (action.type) {
     case '@note/created':
       return [...state, action.payload];

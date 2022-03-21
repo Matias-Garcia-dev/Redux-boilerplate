@@ -5,12 +5,13 @@ import { noteReducer } from './components/NoteReducer';
 import { Provider } from 'react-redux';
 import App from './App';
 import { filterReducer } from './components/filterReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const reducer = combineReducers({
   notes: noteReducer,
   filter: filterReducer,
 });
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 
 const renderApp = () => {
   ReactDOM.render(

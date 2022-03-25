@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { TableCell } from '@material-ui/core';
 
 export const Note = ({ state }) => {
   const dispatch = useDispatch();
@@ -16,14 +17,14 @@ export const Note = ({ state }) => {
     <ul>
       {state.map((note) => {
         return (
-          <li
+          <TableCell
             key={note.id}
             onClick={() => toggleImportant(note.id)}
             style={{ cursor: 'pointer' }}
           >
             {note.content}{' '}
             <strong> {note.important ? 'important' : 'not important'}</strong>
-          </li>
+          </TableCell>
         );
       })}
     </ul>

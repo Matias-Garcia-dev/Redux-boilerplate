@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createNote } from './NoteReducer';
+import { Button } from '@material-ui/core';
 
 export const NewNote = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,9 @@ export const NewNote = () => {
   return (
     <form onSubmit={addNote}>
       <input name='note' />
-      <button style={{ cursor: 'pointer' }}>add</button>
+      <Button variant='outline' color='primary'>
+        add
+      </Button>
     </form>
   );
 };
